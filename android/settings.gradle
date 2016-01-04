@@ -1,0 +1,3 @@
+rootProject.name = 'TenTags'
+
+include ':app'
