@@ -1,96 +1,121 @@
 'use strict';
 
 var React = require('react-native');
+// var Parse = require('parse').Parse;
+var Parse = require('parse/react-native');
+var ParseReact = require('parse-react/react-native');
+
 var {
   AppRegistry,
-  AsyncStorage,
-  PickerIOS,
+  StyleSheet,
   Text,
-  View
+  View,
+  AsyncStorage
 } = React;
 
-var PickerItemIOS = PickerIOS.Item;
+function randomString(length) {
+  return Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
+};
 
-var STORAGE_KEY = '@AsyncStorageExample:key';
-var COLORS = ['red', 'orange', 'yellow', 'green', 'blue'];
+var username = null;
+var password = null;
 
-var BasicStorageExample = React.createClass({
-  componentDidMount() {
-    this._loadInitialState().done();
-  },
 
+var TenTags = React.createClass({
   async _loadInitialState() {
-    try {
-      var value = await AsyncStorage.getItem(STORAGE_KEY);
-      if (value !== null){
-        this.setState({selectedValue: value});
-        this._appendMessage('Recovered selection from disk: ' + value);
-      } else {
-        this._appendMessage('Initialized with no selection on disk.');
-      }
-    } catch (error) {
-      this._appendMessage('AsyncStorage error: ' + error.message);
-    }
+    username = await AsyncStorage.getItem("USER_NAME");
+    password = await AsyncStorage.getItem("PASSWORD");
   },
-
-  getInitialState() {
+  async _saveStateLocal(key, value) {
+    await AsyncStorage.setItem(key, value);
+  },
+  getInitialState: function() {
     return {
-      selectedValue: COLORS[0],
-      messages: [],
+      user: null
     };
   },
+  componentWillMount: function() {
+    var DeviceUUID = require("react-native-device-uuid");
+    DeviceUUID.getUUID().then((uuid) => {
+      console.log(uuid);
+    });
 
-  render() {
-    var color = this.state.selectedValue;
-    return (
-      <View>
-        <Text>
-          {'Selected: '}
-          <Text style={{color}}>
-            {this.state.selectedValue}
-          </Text>
-        </Text>
-        <Text>{' '}</Text>
-        <Text onPress={this._removeStorage}>
-          Press here to remove from storage.
-        </Text>
-        <Text>{' '}</Text>
-        <Text>Messages:</Text>
-        {this.state.messages.map((m) => <Text key={m}>{m}</Text>)}
-      </View>
-    );
-  },
+    //prod
+    // Parse.initialize("zoYLGIcwju9NnQJxX6Kg4zV839tdwHCc2qNWKQGu", "DeTVIq6dl8x2hVynylVJneaDcvoRZ9vb3SOF04TW");
+    //dev
+    Parse.initialize("C0caJoLjtwhdtE3tXywMPzragKn7NxwPze0iZEIl", "cvmyxydA8IWtHRASJadWeFKNtM41VsvmObfsvgKi");
 
-  async _onValueChange(selectedValue) {
-    this.setState({selectedValue});
     try {
-      await AsyncStorage.setItem(STORAGE_KEY, selectedValue);
-      this._appendMessage('Saved selection to disk: ' + selectedValue);
-    } catch (error) {
-      this._appendMessage('AsyncStorage error: ' + error.message);
+      Parse.User.currentAsync()
+      .then(
+        (user) => {
+          if(!user) {
+            // try to sign in based on the local storage data
+            this._loadInitialState();
+            if(!username) { // no user previously stored in local storage, really need to sign up
+              user = new Parse.User();
+
+              username = randomString(36);
+              password = randomString(36);
+
+              user.set('username', username);
+              user.set('password', password);
+              user.signUp(null, {
+                success: (user) => {
+                  console.log("1 user is initialized... " + user);
+                  this._saveStateLocal('USER_NAME', username);
+                  this._saveStateLocal('PASSWORD', password);
+                  this.setState({user: user});
+                },
+                error: (user, error) => { this.setState({errorMessage: error.message}); }
+              });
+            } else {// sign in here
+              Parse.User.logIn(username, password, {
+                success: (user) => {
+                  console.log("2 user is initialized... " + user);
+                  this._saveStateLocal('USER_NAME', username);
+                  this._saveStateLocal('PASSWORD', password);
+                  this.setState({user: user});
+                },
+                error: (data, error) => { this.setState({ errorMessage: error.message }); }
+              });
+            }
+          };
+          console.log("3 user is initialized... " + user);
+          this.setState({user: user});
+        },
+        (error) => {
+          console.log("creating a new session...");
+        });
+      } catch (error) {
+        this.setState({ errorMessage: error.message });
+      }
+    },
+    render: function() {
+      if (!this.state.user) {
+        return (
+          <View style={styles.container}>
+            <Text>...loading...</Text>
+          </View>
+        );
+      }
+
+      var username = this.state.user.get('username');
+
+      return (
+        <View style={styles.container}>
+          <Text>{username}</Text>
+        </View>
+      );
     }
-  },
+  });
 
-  async _removeStorage() {
-    try {
-      await AsyncStorage.removeItem(STORAGE_KEY);
-      this._appendMessage('Selection removed from disk.');
-    } catch (error) {
-      this._appendMessage('AsyncStorage error: ' + error.message);
+  var styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
     }
-  },
+  });
 
-  _appendMessage(message) {
-    this.setState({messages: this.state.messages.concat(message)});
-  },
-});
-
-exports.title = 'AsyncStorage';
-exports.description = 'Asynchronous local disk storage.';
-exports.examples = [
-  {
-    title: 'Basics - getItem, setItem, removeItem',
-    render(): ReactElement { return <BasicStorageExample />; }
-  },
-];
-AppRegistry.registerComponent('TenTags', () => BasicStorageExample);
+  AppRegistry.registerComponent('TenTags', () => TenTags);

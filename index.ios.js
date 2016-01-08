@@ -35,6 +35,11 @@ var TenTags = React.createClass({
     };
   },
   componentWillMount: function() {
+    var DeviceUUID = require("react-native-device-uuid");
+    DeviceUUID.getUUID().then((uuid) => {
+      console.log(uuid);
+    });
+
     //prod
     // Parse.initialize("zoYLGIcwju9NnQJxX6Kg4zV839tdwHCc2qNWKQGu", "DeTVIq6dl8x2hVynylVJneaDcvoRZ9vb3SOF04TW");
     //dev
