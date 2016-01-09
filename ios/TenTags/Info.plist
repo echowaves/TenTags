@@ -27,8 +27,16 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>TenTags uses your location to find like-minded people around you and to notify you when someone is close by.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>TenTags uses your location to find like-minded people around you and to notify you when someone is close by.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -43,5 +51,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <!--See http://ste.vn/2015/06/10/configuring-app-transport-security-ios-9-osx-10-11/ -->
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+  </dict>
+
 </dict>
 </plist>
