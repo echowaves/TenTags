@@ -59,6 +59,10 @@ var TenTags = React.createClass({
                     user.set("location", point);
                     user.save();
 
+                    var ttUser = require('./src/model/TTUser');
+                    ttUser.addTag(user, "tenTags");
+                    ttUser.addTag(user, "gossip");
+
                     this.setState({user: user});
                   },
                   error: (user, error) => {
