@@ -31,7 +31,6 @@ var TenTags = React.createClass({
     //dev
     Parse.initialize("C0caJoLjtwhdtE3tXywMPzragKn7NxwPze0iZEIl", "cvmyxydA8IWtHRASJadWeFKNtM41VsvmObfsvgKi");
 
-
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var currentPosition = JSON.stringify(position);
@@ -42,7 +41,7 @@ var TenTags = React.createClass({
           Parse.User.currentAsync()
           .then(
             (user) => {
-              if(user === null) {
+              if(user == null) {
                 user = new Parse.User();
 
                 var username = randomString(64);
@@ -70,14 +69,15 @@ var TenTags = React.createClass({
                     alert(error.message);
                   }
                 });
-              };
-              console.log("3: user is initialized... " + user);
+              } else {
+                console.log("3: user is initialized... " + user);
 
-              var point = new Parse.GeoPoint({latitude: position.coords.latitude, longitude: position.coords.longitude});
-              user.set("location", point);
-              user.save();
+                var point = new Parse.GeoPoint({latitude: position.coords.latitude, longitude: position.coords.longitude});
+                user.set("location", point);
+                user.save();
 
-              this.setState({user: user});
+                this.setState({user: user});
+              }; // if user
             },
             (error) => {
               console.log("error creating a new session...");
@@ -89,7 +89,7 @@ var TenTags = React.createClass({
             alert(error.message);
           }
         },
-        (error) => alert(error.message),
+        (error) => alert(error.message + "\nYou have to enable GPS to use TenTags"),
         {enableHighAccuracy: false, timeout: 20000, maximumAge: 90000}
       );
     },
