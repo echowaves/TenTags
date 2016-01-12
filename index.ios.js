@@ -12,6 +12,8 @@ var {
   AsyncStorage
 } = React;
 
+var UserItem = require('./src/UserItem');
+
 function randomString(length) {
   return Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
 };
@@ -119,6 +121,19 @@ var TenTags = React.createClass({
     componentWillUnmount: function() {
       this.setState(null);
     },
+
+    usersItems: function() {
+      var usersItems = [];
+      var users = this.state.usersNear;
+      for(var i = 0; i < users.length; i++){
+        var user = users[i];
+        usersItems.push(
+          <UserItem user={user} key={user.get('username')}/>
+        )
+      }
+      return usersItems;
+    },
+
     render: function() {
       if (!this.state.user) {
         return (
@@ -140,6 +155,10 @@ var TenTags = React.createClass({
           <Text>
             <Text>usersNear:{this.state.usersNear.length}</Text>
           </Text>
+          <View>
+            {this.usersItems()}
+            {this.usersItems()}
+          </View>
         </View>
       );
     }
