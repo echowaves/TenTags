@@ -82,6 +82,7 @@ var TenTags = React.createClass({
                 });
               } else {
                 console.log("3: user is initialized... " + user);
+                user.fetch();
 
                 var point = new Parse.GeoPoint({latitude: position.coords.latitude, longitude: position.coords.longitude});
                 user.set("location", point);

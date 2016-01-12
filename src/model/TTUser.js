@@ -24,6 +24,7 @@ exports.searchUsersWithMatchingTagsCloseBy = function(user) {
   var subQueries = [];
   var index;
   var TAGS = user.get("hashTags");
+
   for	(index = 0; index < TAGS.length; index++) {
     console.log("looking for tags: " + TAGS[index]);
       var subQuery = new Parse.Query(User).equalTo("hashTags", TAGS[index]);
