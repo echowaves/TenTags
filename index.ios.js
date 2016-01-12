@@ -21,7 +21,8 @@ var TenTags = React.createClass({
   getInitialState: function() {
     return {
       user: null,
-      currentPosition: 'unknown'
+      currentPosition: 'unknown',
+      usersNear: []
     };
   },
 
@@ -57,12 +58,22 @@ var TenTags = React.createClass({
                     var point = new Parse.GeoPoint({latitude: position.coords.latitude, longitude: position.coords.longitude});
                     user.set("location", point);
                     user.save();
+                    this.setState({user: user});
 
                     var ttUser = require('./src/model/TTUser');
                     ttUser.addTag(user, "tenTags");
                     ttUser.addTag(user, "gossip");
 
-                    this.setState({user: user});
+
+                    ttUser.searchUsersWithMatchingTagsCloseBy(user)
+                    .then((users) => {
+                      this.setState({usersNear: users});
+                    },
+                    (error) => {
+                      this.setState({errorMessage: error.message});
+                      alert(error.message);
+                    });
+
                   },
                   error: (user, error) => {
                     this.setState({errorMessage: error.message});
@@ -75,8 +86,19 @@ var TenTags = React.createClass({
                 var point = new Parse.GeoPoint({latitude: position.coords.latitude, longitude: position.coords.longitude});
                 user.set("location", point);
                 user.save();
-
                 this.setState({user: user});
+
+                var ttUser = require('./src/model/TTUser');
+
+                ttUser.searchUsersWithMatchingTagsCloseBy(user)
+                .then((users) => {
+                  this.setState({usersNear: users});
+                },
+                (error) => {
+                  this.setState({errorMessage: error.message});
+                  alert(error.message);
+                });
+
               }; // if user
             },
             (error) => {
@@ -94,39 +116,44 @@ var TenTags = React.createClass({
       );
     },
     componentWillUnmount: function() {
+      this.setState(null);
     },
     render: function() {
       if (!this.state.user) {
         return (
           <View style={styles.container}>
-          <Text>...loading...</Text>
+            <Text>...loading...</Text>
+          </View>
+        );
+      }
+
+      var username = this.state.user.get('username');
+
+      return (
+        <View style={styles.container}>
+          <Text>{username}</Text>
+          <Text>
+            <Text style={styles.title}>Current position: </Text>
+            {this.state.currentPosition}
+          </Text>
+          <Text>
+            <Text>usersNear:{this.state.usersNear.length}</Text>
+          </Text>
         </View>
       );
     }
 
-    var username = this.state.user.get('username');
+  });
 
-    return (
-      <View style={styles.container}>
-      <Text>{username}</Text>
-    <Text>
-    <Text style={styles.title}>Current position: </Text>
-  {this.state.currentPosition}
-  </Text>
-  </View>
-);
-}
-});
+  var styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    title: {
+      fontWeight: '500',
+    }
+  });
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontWeight: '500',
-  }
-});
-
-AppRegistry.registerComponent('TenTags', () => TenTags);
+  AppRegistry.registerComponent('TenTags', () => TenTags);
