@@ -35,7 +35,7 @@ exports.searchUsersWithMatchingTagsCloseBy = function(user) {
   var userGeoPoint = user.get("location");
   // Create a query for places
   var mainQuery = Parse.Query.or.apply(Parse.Query, subQueries)
-  .near("location", userGeoPoint);
+  .near("location", userGeoPoint).notEqualTo("username", user.get("username"));
 
 
   // new Parse.Query(User).near("location", userGeoPoint);
