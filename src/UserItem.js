@@ -6,7 +6,7 @@ var Text = React.Text;
 var UserItem = React.createClass({
   render: function() {
     return <Text style={this.style()}>
-      {this.props.user.get('username')}
+      {this.props.user.get('hashTags')}
     </Text>
   },
   style: function() {

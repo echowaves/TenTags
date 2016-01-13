@@ -9,6 +9,7 @@ var {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   AsyncStorage
 } = React;
 
@@ -24,7 +25,8 @@ var TenTags = React.createClass({
     return {
       user: null,
       currentPosition: 'unknown',
-      usersNear: []
+      usersNear: [],
+      errorMessage: ""
     };
   },
 
@@ -106,6 +108,7 @@ var TenTags = React.createClass({
             },
             (error) => {
               console.log("error creating a new session...");
+              this.setState({errorMessage: error.message});
               alert(error.message);
             });
           } catch (error) {
@@ -114,7 +117,10 @@ var TenTags = React.createClass({
             alert(error.message);
           }
         },
-        (error) => alert(error.message + "\nYou have to enable GPS to use TenTags"),
+        (error) => {
+          alert(error.message + "\nYou have to enable GPS to use TenTags");
+          this.setState({errorMessage: error.message});
+        },
         {enableHighAccuracy: false, timeout: 20000, maximumAge: 90000}
       );
     },
@@ -128,13 +134,23 @@ var TenTags = React.createClass({
       for(var i = 0; i < users.length; i++){
         var user = users[i];
         usersItems.push(
-          <UserItem user={user} key={user.get('username')}/>
+          <UserItem user={user} key={user.id}/>
         )
       }
       return usersItems;
     },
 
     render: function() {
+
+      if (this.state.errorMessage.length > 0) {
+        return (
+          <View style={styles.container}>
+            <Text>{this.state.errorMessage}</Text>
+          </View>
+        );
+      }
+
+
       if (!this.state.user) {
         return (
           <View style={styles.container}>
@@ -143,23 +159,17 @@ var TenTags = React.createClass({
         );
       }
 
+
+
+
       var username = this.state.user.get('username');
 
       return (
-        <View style={styles.container}>
-          <Text>{username}</Text>
-          <Text>
-            <Text style={styles.title}>Current position: </Text>
-            {this.state.currentPosition}
-          </Text>
-          <Text>
-            <Text>usersNear:{this.state.usersNear.length}</Text>
-          </Text>
-          <View>
+        <ScrollView style={styles.container}>
             {this.usersItems()}
             {this.usersItems()}
-          </View>
-        </View>
+            {this.usersItems()}
+        </ScrollView>
       );
     }
 
@@ -167,9 +177,7 @@ var TenTags = React.createClass({
 
   var styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      flex: 1
     },
     title: {
       fontWeight: '500',
