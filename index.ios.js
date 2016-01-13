@@ -167,8 +167,6 @@ var TenTags = React.createClass({
       return (
         <ScrollView style={styles.container}>
             {this.usersItems()}
-            {this.usersItems()}
-            {this.usersItems()}
         </ScrollView>
       );
     }

@@ -21,7 +21,7 @@ var UserItem = React.createClass({
     return (
       <View>
         <Text style={this.style()}>
-          {Geo.haversineSync(coord1, coord2)}
+          {(Geo.haversineSync(coord1, coord2) * 0.621371192).toFixed(2)}
         </Text>
         <Text style={this.style()}>
           {this.props.user.get('hashTags')}
