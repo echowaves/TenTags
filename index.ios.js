@@ -39,7 +39,7 @@ var TenTags = React.createClass({
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var currentPosition = JSON.stringify(position);
-        this.setState({currentPosition});
+        this.setState({currentPosition: currentPosition});
         console.log("currentPosition: " + currentPosition);
 
         try {
@@ -133,15 +133,15 @@ var TenTags = React.createClass({
       var users = this.state.usersNear;
       for(var i = 0; i < users.length; i++){
         var user = users[i];
+        var currentPosition = JSON.parse(this.state.currentPosition).coords;
         usersItems.push(
-          <UserItem user={user} key={user.id}/>
+          <UserItem key={user.id} user={user} currentPosition={currentPosition} />
         )
       }
       return usersItems;
     },
 
     render: function() {
-
       if (this.state.errorMessage.length > 0) {
         return (
           <View style={styles.container}>

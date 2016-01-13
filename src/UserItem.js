@@ -1,20 +1,40 @@
 // Import some code we need
 var React = require('react-native');
-var Text = React.Text;
+var Geo = require('node-geo-distance');
+
+var {
+  Text,
+  View,
+} = React;
 
 // Create our component
 var UserItem = React.createClass({
   render: function() {
-    return <Text style={this.style()}>
-      {this.props.user.get('hashTags')}
-    </Text>
+    var coord1 = {
+      latitude: this.props.currentPosition.latitude,
+      longitude: this.props.currentPosition.longitude
+    };
+    var coord2 = {
+      latitude: this.props.user.get("location")["latitude"],
+      longitude: this.props.user.get("location")["longitude"]
+    };
+    return (
+      <View>
+        <Text style={this.style()}>
+          {Geo.haversineSync(coord1, coord2)}
+        </Text>
+        <Text style={this.style()}>
+          {this.props.user.get('hashTags')}
+        </Text>
+      </View>
+    );
   },
   style: function() {
     return {
       color: "blue",
       fontWeight: '700',
-      fontSize: 12,
-      lineHeight: 15
+      fontSize: 25,
+      lineHeight: 25
     }
   }
 });
