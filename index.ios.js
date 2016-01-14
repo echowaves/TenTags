@@ -127,7 +127,29 @@ var TenTags = React.createClass({
     componentWillUnmount: function() {
       this.setState(null);
     },
+    render: function() {
+      if (this.state.errorMessage.length > 0) {
+        return (
+          <View style={styles.container}>
+            <Text>{this.state.errorMessage}</Text>
+          </View>
+        );
+      }
+      if (!this.state.user) {
+        return (
+          <View style={styles.container}>
+            <Text>...loading...</Text>
+          </View>
+        );
+      }
+      var username = this.state.user.get('username');
 
+      return (
+        <ScrollView style={styles.container}>
+            {this.usersItems()}
+        </ScrollView>
+      );
+    },
     usersItems: function() {
       var usersItems = [];
       var users = this.state.usersNear;
@@ -141,44 +163,11 @@ var TenTags = React.createClass({
       return usersItems;
     },
 
-    render: function() {
-      if (this.state.errorMessage.length > 0) {
-        return (
-          <View style={styles.container}>
-            <Text>{this.state.errorMessage}</Text>
-          </View>
-        );
-      }
-
-
-      if (!this.state.user) {
-        return (
-          <View style={styles.container}>
-            <Text>...loading...</Text>
-          </View>
-        );
-      }
-
-
-
-
-      var username = this.state.user.get('username');
-
-      return (
-        <ScrollView style={styles.container}>
-            {this.usersItems()}
-        </ScrollView>
-      );
-    }
-
   });
 
   var styles = StyleSheet.create({
     container: {
       flex: 1
-    },
-    title: {
-      fontWeight: '500',
     }
   });
 
