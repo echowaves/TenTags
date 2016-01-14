@@ -39,7 +39,7 @@ var TenTags = React.createClass({
     navigator.geolocation.getCurrentPosition(
       (position) => {
         var currentPosition = JSON.stringify(position);
-        this.setState({currentPosition});
+        this.setState({currentPosition: currentPosition});
         console.log("currentPosition: " + currentPosition);
 
         try {
@@ -127,21 +127,7 @@ var TenTags = React.createClass({
     componentWillUnmount: function() {
       this.setState(null);
     },
-
-    usersItems: function() {
-      var usersItems = [];
-      var users = this.state.usersNear;
-      for(var i = 0; i < users.length; i++){
-        var user = users[i];
-        usersItems.push(
-          <UserItem user={user} key={user.id}/>
-        )
-      }
-      return usersItems;
-    },
-
     render: function() {
-
       if (this.state.errorMessage.length > 0) {
         return (
           <View style={styles.container}>
@@ -149,8 +135,6 @@ var TenTags = React.createClass({
           </View>
         );
       }
-
-
       if (!this.state.user) {
         return (
           <View style={styles.container}>
@@ -158,23 +142,26 @@ var TenTags = React.createClass({
           </View>
         );
       }
-
-
-
-
       var username = this.state.user.get('username');
 
       return (
         <ScrollView style={styles.container}>
             {this.usersItems()}
-            {this.usersItems()}
-            {this.usersItems()}
-            {this.usersItems()}
-            {this.usersItems()}
-            {this.usersItems()}
         </ScrollView>
       );
-    }
+    },
+    usersItems: function() {
+      var usersItems = [];
+      var users = this.state.usersNear;
+      for(var i = 0; i < users.length; i++){
+        var user = users[i];
+        var currentPosition = JSON.parse(this.state.currentPosition).coords;
+        usersItems.push(
+          <UserItem key={user.id} user={user} currentPosition={currentPosition} />
+        )
+      }
+      return usersItems;
+    },
 
   });
 
