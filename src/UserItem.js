@@ -5,6 +5,7 @@ var Geo = require('node-geo-distance');
 var {
   StyleSheet,
   Text,
+  TouchableHighlight,
   View,
 } = React;
 
@@ -27,22 +28,26 @@ var UserItem = React.createClass({
           </Text>
         </View>
 
+        <TouchableHighlight>
         <View style={styles.bottomWrapper}>
-        <View style={[styles.hashTags]}>
-          {this.hashTags()}
+          <View style={[styles.hashTags]}>
+            {this.hashTags()}
+          </View>
+          <View>
+            <Text style={styles.rightArrow}>
+              >
+            </Text>
+          </View>
         </View>
-        <View>
-          <Text style={styles.rightArrow}>
-            >
-          </Text>
-        </View>
-      </View>
+      </TouchableHighlight>
       </View>
     );
   },
   hashTags: function() {
     return this.props.user.get('hashTags').map(function(hashTag, index){
-      return <Text key={index} style={styles.hashTag}>{hashTag}</Text>
+      return <View key={index} style={styles.hashTagWrapper}>
+        <Text style={styles.hashTag}>{hashTag}</Text>
+      </View>
     });
   },
   border: function(color) {
@@ -77,17 +82,20 @@ var styles = StyleSheet.create({
     justifyContent: 'flex-start',
     // height: 35,
   },
+  hashTagWrapper: {
+    borderRadius: 5,
+    // borderColor: "#666666",
+    backgroundColor: "#bfffef",
+    margin: 3,
+    padding: 3,
+
+  },
   hashTag: {
     lineHeight: 25,
     fontWeight: '400',
     fontSize: 25,
     color: "#003399",
-    backgroundColor: "#bfffef",
-    margin: 3,
-    padding: 3,
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: "#666666"
+    fontFamily: 'Helvetica',
   },
   rightArrow: {
     lineHeight: 25,
