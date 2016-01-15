@@ -1,6 +1,8 @@
 // Import some code we need
 var React = require('react-native');
 var Geo = require('node-geo-distance');
+var Icon = require('react-native-vector-icons/FontAwesome');
+
 
 var {
   StyleSheet,
@@ -20,10 +22,11 @@ var UserItem = React.createClass({
       latitude: this.props.user.get("location")["latitude"],
       longitude: this.props.user.get("location")["longitude"]
     };
+
     return (
-      <View style={[styles.userItemLine, this.border("red")]}>
+      <View style={styles.userItemLine}>
         <View style={styles.topWrapper}>
-          <Text>
+          <Text style={styles.distance}>
             {(Geo.haversineSync(coord1, coord2) * 0.621371192).toFixed(2)}
           </Text>
         </View>
@@ -35,7 +38,7 @@ var UserItem = React.createClass({
           </View>
           <View>
             <Text style={styles.rightArrow}>
-              >
+              <Icon name="chevron-right" size={25} color="#900" />
             </Text>
           </View>
         </View>
@@ -61,6 +64,9 @@ var UserItem = React.createClass({
 var styles = StyleSheet.create({
   userItemLine: {
     flex: 1,
+    borderBottomWidth: 2,
+    borderColor: "#666666"
+
   },
   topWrapper: {
 
@@ -72,7 +78,9 @@ var styles = StyleSheet.create({
     flexDirection: "row",
   },
   distance: {
-    alignSelf: 'flex-start'
+    alignSelf: 'flex-start',
+    margin: 1,
+    padding: 1,
   },
   hashTags: {
     flexDirection: 'row',
@@ -88,7 +96,6 @@ var styles = StyleSheet.create({
     backgroundColor: "#bfffef",
     margin: 3,
     padding: 3,
-
   },
   hashTag: {
     lineHeight: 25,
@@ -102,6 +109,8 @@ var styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 25,
     color: "#003399",
+    margin: 3,
+    padding: 3,
     // alignSelf: "flex-end",
   }
 });
