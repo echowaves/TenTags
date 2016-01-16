@@ -21,13 +21,12 @@ module.exports = React.createClass({
               <Icon name="chevron-left" size={25} color="#666666" />
           </TouchableHighlight>
         </View>
-
         <View style={styles.content}>
           <Text>TagsList Coming Soon.</Text>
         </View>
         <View style={styles.addButtonWraper}>
           <TouchableHighlight style={styles.addButton} onPress={this.addNewTagPressed}>
-              <Text>add new tag</Text>
+              <Text style={styles.addButtonText}>add new tag</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -46,6 +45,7 @@ module.exports = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'space-between',
   },
   navbar: {
     flexDirection: 'row',
@@ -57,5 +57,38 @@ var styles = StyleSheet.create({
     alignSelf: 'flex-end',
     margin: 5,
   },
+  content: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+
+  },
+  addButtonWraper: {
+    alignSelf: 'center',
+    margin: 15,
+    marginTop: 22,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 4,
+    paddingBottom: 4,
+    borderRadius: 5,
+    backgroundColor: "red",
+  },
+  addButton: {
+
+  },
+  addButtonText: {
+    color: "white",
+    fontWeight: '400',
+    fontSize: 25,
+    // color: "#003399",
+    fontFamily: 'Helvetica',
+    margin: 3,
+    padding: 3,
+
+  }
+
 
 });
