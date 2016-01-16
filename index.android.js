@@ -145,9 +145,14 @@ var TenTags = React.createClass({
       var username = this.state.user.get('username');
 
       return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
+          <View style={styles.navbar}>
+
+          </View>
+        <ScrollView>
             {this.usersItems()}
         </ScrollView>
+        </View>
       );
     },
     usersItems: function() {
@@ -168,6 +173,10 @@ var TenTags = React.createClass({
   var styles = StyleSheet.create({
     container: {
       flex: 1
+    },
+    navbar: {
+      height: 60,
+
     }
   });
 

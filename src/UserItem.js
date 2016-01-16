@@ -27,7 +27,7 @@ var UserItem = React.createClass({
       <View style={styles.userItemLine}>
         <View style={styles.topWrapper}>
           <Text style={styles.distance}>
-            {(Geo.haversineSync(coord1, coord2) * 0.621371192).toFixed(2)}
+            {(Geo.haversineSync(coord1, coord2) * 0.621371192).toFixed(2)} miles
           </Text>
         </View>
 
@@ -38,7 +38,7 @@ var UserItem = React.createClass({
           </View>
           <View>
             <Text style={styles.rightArrow}>
-              <Icon name="chevron-right" size={25} color="#900" />
+              <Icon name="chevron-right" size={25} color="#666666" />
             </Text>
           </View>
         </View>
@@ -64,9 +64,8 @@ var UserItem = React.createClass({
 var styles = StyleSheet.create({
   userItemLine: {
     flex: 1,
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderColor: "#666666"
-
   },
   topWrapper: {
 
@@ -81,6 +80,7 @@ var styles = StyleSheet.create({
     alignSelf: 'flex-start',
     margin: 1,
     padding: 1,
+    color: "#666666",
   },
   hashTags: {
     flexDirection: 'row',
@@ -93,25 +93,23 @@ var styles = StyleSheet.create({
   hashTagWrapper: {
     borderRadius: 5,
     // borderColor: "#666666",
-    backgroundColor: "#bfffef",
-    margin: 3,
-    padding: 3,
+    backgroundColor: "#999966",
+    margin: 1,
+    padding: 1,
   },
   hashTag: {
-    lineHeight: 25,
+    // lineHeight: 25,
     fontWeight: '400',
     fontSize: 25,
-    color: "#003399",
+    // color: "#003399",
     fontFamily: 'Helvetica',
-  },
-  rightArrow: {
-    lineHeight: 25,
-    fontWeight: '700',
-    fontSize: 25,
-    color: "#003399",
     margin: 3,
     padding: 3,
-    // alignSelf: "flex-end",
+
+  },
+  rightArrow: {
+    margin: 3,
+    padding: 3,
   }
 });
 

@@ -9,6 +9,8 @@ var {
   StyleSheet,
   Text,
   View,
+  Image,
+  TouchableHighlight,
   ScrollView,
   AsyncStorage
 } = React;
@@ -145,9 +147,19 @@ var TenTags = React.createClass({
       var username = this.state.user.get('username');
 
       return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
+          <View style={styles.navbar}>
+            <TouchableHighlight style={styles.leftMenuItem}>
+              <Image source={require('./img/logo.png')}  style={{width: 40, height: 40}}/>
+            </TouchableHighlight>
+            <TouchableHighlight style={styles.rightMenuItem}>
+              <Text style={styles.unreadCounter}>0</Text>
+            </TouchableHighlight>
+          </View>
+        <ScrollView>
             {this.usersItems()}
         </ScrollView>
+        </View>
       );
     },
     usersItems: function() {
@@ -168,6 +180,29 @@ var TenTags = React.createClass({
   var styles = StyleSheet.create({
     container: {
       flex: 1
+    },
+    navbar: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      height: 60,
+      backgroundColor: "#779966",
+    },
+    leftMenuItem: {
+      alignSelf: 'flex-end',
+      margin: 5,
+    },
+    rightMenuItem: {
+      alignSelf: 'center',
+      margin: 15,
+      paddingLeft: 10,
+      paddingRight: 10,
+      paddingTop: 4,
+      paddingBottom: 4,
+      borderRadius: 5,
+      backgroundColor: "red",
+    },
+    unreadCounter: {
+      color: "white",
     }
   });
 
