@@ -147,9 +147,9 @@ module.exports = React.createClass({
               <Text style={styles.unreadCounter}>0</Text>
             </TouchableHighlight>
           </View>
-        <ScrollView>
+          <ScrollView>
             {this.usersItems()}
-        </ScrollView>
+          </ScrollView>
         </View>
       );
     },
