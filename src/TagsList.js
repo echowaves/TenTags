@@ -25,12 +25,20 @@ module.exports = React.createClass({
         <View style={styles.content}>
           <Text>TagsList Coming Soon.</Text>
         </View>
+        <View style={styles.addButtonWraper}>
+          <TouchableHighlight style={styles.addButton} onPress={this.addNewTagPressed}>
+              <Text>add new tag</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   },
   backButtonPressed: function() {
     this.props.navigator.pop();
   },
+  addNewTagPressed: function() {
+      this.props.navigator.push({name: 'addtags'});
+  }
 
 });
 
