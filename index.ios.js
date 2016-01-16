@@ -194,6 +194,7 @@ var TenTags = React.createClass({
     rightMenuItem: {
       alignSelf: 'center',
       margin: 15,
+      marginTop: 22,
       paddingLeft: 10,
       paddingRight: 10,
       paddingTop: 4,
@@ -201,6 +202,7 @@ var TenTags = React.createClass({
       borderRadius: 5,
       backgroundColor: "red",
     },
+
     unreadCounter: {
       color: "white",
     }
