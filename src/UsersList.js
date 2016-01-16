@@ -143,6 +143,7 @@ module.exports = React.createClass({
             <TouchableHighlight style={styles.leftMenuItem} onPress={this.onTagsListPres}>
               <Image source={require('../img/logo.png')}  style={{width: 40, height: 40}}/>
             </TouchableHighlight>
+            <Text style={styles.title}>around me</Text>
             <TouchableHighlight style={styles.rightMenuItem} onPress={this.onConvosListPres}>
               <Text style={styles.unreadCounter}>0</Text>
             </TouchableHighlight>
@@ -185,6 +186,14 @@ module.exports = React.createClass({
       backgroundColor: "#779966",
     },
     leftMenuItem: {
+      alignSelf: 'flex-end',
+      margin: 5,
+    },
+    title: {
+      fontWeight: '200',
+      fontSize: 25,
+      color: "#444444",
+      fontFamily: 'Helvetica',
       alignSelf: 'flex-end',
       margin: 5,
     },

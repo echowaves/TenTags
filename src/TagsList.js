@@ -20,6 +20,8 @@ module.exports = React.createClass({
           <TouchableHighlight style={styles.leftMenuItem} onPress={this.backButtonPressed}>
               <Icon name="chevron-left" size={25} color="#666666" />
           </TouchableHighlight>
+          <Text style={styles.title}>my tags</Text>
+          <Text comment={"this is a place holder for right nav item"}>   </Text>
         </View>
         <View style={styles.content}>
           <Text>TagsList Coming Soon.</Text>
@@ -54,6 +56,14 @@ var styles = StyleSheet.create({
     backgroundColor: "#779966",
   },
   leftMenuItem: {
+    alignSelf: 'flex-end',
+    margin: 5,
+  },
+  title: {
+    fontWeight: '200',
+    fontSize: 25,
+    color: "#444444",
+    fontFamily: 'Helvetica',
     alignSelf: 'flex-end',
     margin: 5,
   },
