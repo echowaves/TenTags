@@ -155,10 +155,15 @@ module.exports = React.createClass({
       );
     },
     onTagsListPres: function() {
-      this.props.navigator.push({name: 'tagslist'});
+      this.props.navigator.push({
+        name: 'tagslist',
+        user: this.state.user
+      })
     },
     onConvosListPres: function() {
-      this.props.navigator.push({name: 'convoslist'});
+      this.props.navigator.push({
+        name: 'convoslist',
+      });
     },
     usersItems: function() {
       var usersItems = [];

@@ -29,7 +29,7 @@ module.exports = React.createClass({
   },
   renderScene: function(route, navigator) {
     var Component = ROUTES[route.name]; // ROUTES['signin'] => Signin
-    return <Component route={route} navigator={navigator} />;
+    return <Component route={route} navigator={navigator}/>;
   },
   render: function() {
     return (

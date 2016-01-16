@@ -11,34 +11,48 @@ var {
 module.exports = React.createClass({
   getInitialState: function() {
     return {
+      user: null,
     };
+  },
+  componentWillMount: function() {
+    this.setState({user: this.props.route.user});
   },
   render: function() {
     return (
       <View style={styles.container}>
         <View style={styles.navbar}>
           <TouchableHighlight style={styles.leftMenuItem} onPress={this.backButtonPressed}>
-              <Icon name="chevron-left" size={25} color="#666666" />
+            <Icon name="chevron-left" size={25} color="#666666" />
           </TouchableHighlight>
           <Text style={styles.title}>my tags</Text>
           <Text comment={"this is a place holder for right nav item"}>   </Text>
         </View>
         <View style={styles.content}>
-          <Text>TagsList Coming Soon.</Text>
+          {this.hashTags()}
         </View>
         <View style={styles.addButtonWraper}>
           <TouchableHighlight style={styles.addButton} onPress={this.addNewTagPressed}>
-              <Text style={styles.addButtonText}>add new tag</Text>
+            <Text style={styles.addButtonText}>add new tag</Text>
           </TouchableHighlight>
         </View>
       </View>
     );
   },
+  hashTags: function() {
+    return this.state.user.get('hashTags').map(function(hashTag, index){
+      return <TouchableHighlight key={index} style={styles.hashTagWrapper}>
+        <View style={styles.hashTagHolder}>
+          <Icon name="close" size={8} color="#666666" style={{alignSelf: 'center', marginLeft: 5}} />
+          <Text style={styles.hashTag}>{hashTag}</Text>
+        </View>
+      </TouchableHighlight>
+    });
+  },
   backButtonPressed: function() {
     this.props.navigator.pop();
   },
   addNewTagPressed: function() {
-      this.props.navigator.push({name: 'addtags'});
+    this.props.navigator.push({name: 'addtags'});
   }
 
 });
@@ -98,7 +112,38 @@ var styles = StyleSheet.create({
     margin: 3,
     padding: 3,
 
-  }
+  },
+
+  hashTags: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    // height: 35,
+  },
+  hashTagWrapper: {
+    borderRadius: 5,
+    // borderColor: "#666666",
+    backgroundColor: "#999966",
+    margin: 1,
+    padding: 1,
+  },
+  hashTagHolder: {
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+  },
+  hashTag: {
+    // lineHeight: 25,
+    fontWeight: '400',
+    fontSize: 25,
+    // color: "#003399",
+    fontFamily: 'Helvetica',
+    margin: 3,
+    padding: 3,
+
+  },
+
 
 
 });
