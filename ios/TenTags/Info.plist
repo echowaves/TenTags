@@ -30,11 +30,12 @@
     <key>NSLocationAlwaysUsageDescription</key>
     <string>TenTags uses your location to find like-minded people around you and to notify you when someone is close by.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
+    <string/>
+    <key>NSLocationWhenInUseUsageDescription </key>
     <string>TenTags uses your location to find like-minded people around you and to notify you when someone is close by.</string>
     <key>UIBackgroundModes</key>
     <array>
       <string>fetch</string>
-      <string>location</string>
       <string>remote-notification</string>
     </array>
     <key>UILaunchStoryboardName</key>

@@ -53,6 +53,7 @@ module.exports = React.createClass({
       <View style={styles.textInputWrapper}>
         <TextInput
           autoFocus={true}
+          autoCapitalize="none"
           maxLength={20}
           multiline={false}
           style={styles.textInput}
@@ -96,7 +97,7 @@ module.exports = React.createClass({
     var that = this;
     var ttUser = require('./model/TTUser');
 
-    if(!this.state.hashTag || this.state.hashTag.length == 0) {
+    if(!this.state.hashTag || this.state.hashTag.trim().length == 0) {
       return;
     };
 
