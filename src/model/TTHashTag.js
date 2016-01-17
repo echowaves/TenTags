@@ -13,7 +13,14 @@ exports.add = function(tag) {
 
 
 exports.autoComplete = function(hashTag) {
+  if(!hashTag || hashTag.length == 0) {
+    var promise = new Parse.Promise();
+    promise.resolve([]);
+    return promise;
+  }
+
   var searchText = hashTag.toLowerCase();
+
 
   var HashTag = Parse.Object.extend("HashTag");
   var query = new Parse.Query(HashTag);
