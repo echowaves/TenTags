@@ -38,14 +38,20 @@ module.exports = React.createClass({
       </View>
     );
   },
+  removeHashTagPressed: function(hashTag) {
+      alert("hashTag");
+  },
   hashTags: function() {
+    var that = this;
     return this.state.user.get('hashTags').map(function(hashTag, index){
-      return <TouchableHighlight key={index} style={styles.hashTagWrapper}>
+      return (
+      <TouchableHighlight key={index} style={styles.hashTagWrapper} onPress={() => that.removeHashTagPressed(hashTag)}>
         <View style={styles.hashTagHolder}>
           <Icon name="close" size={8} color="#666666" style={{alignSelf: 'center', marginLeft: 5}} />
           <Text style={styles.hashTag}>{hashTag}</Text>
         </View>
       </TouchableHighlight>
+    );
     });
   },
   backButtonPressed: function() {
