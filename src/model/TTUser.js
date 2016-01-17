@@ -7,7 +7,7 @@ var User = Parse.Object.extend("User");
 exports.addTag = function(user, tag) {
   user.addUnique("hashTags", tag.toLowerCase());
 
-  user.save(null,
+  return user.save(null,
     {
       success: function() {
         var ttHashTag = require('./TTHashTag');

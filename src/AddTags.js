@@ -83,7 +83,7 @@ module.exports = React.createClass({
   addButtonView: function() {
     return (
       <View style={styles.addButtonWraper}>
-        <TouchableHighlight style={styles.addButton} onPress={() => this.addNewTagPressed}>
+        <TouchableHighlight style={styles.addButton} onPress={() => this.addNewTagPressed()}>
           <Text style={styles.addButtonText}>add this tag</Text>
         </TouchableHighlight>
       </View>
@@ -91,6 +91,25 @@ module.exports = React.createClass({
   },
   backButtonPressed: function() {
     this.props.navigator.pop();
+  },
+  addNewTagPressed: function() {
+    var that = this;
+    var ttUser = require('./model/TTUser');
+
+    if(!this.state.hashTag || this.state.hashTag.length == 0) {
+      return;
+    };
+
+    ttUser.addTag(this.state.user, this.state.hashTag)
+    .then(() => {
+      that.state.parentComponent.setState({user: that.state.user});
+      that.state.parentComponent.updateParentComponent();
+      that.props.navigator.pop();
+    },
+    (error) => {
+      alert(error.message);
+    });
+
   },
   typingText: function(hashTag) {
     this.setState({hashTag: hashTag});

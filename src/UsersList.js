@@ -57,20 +57,7 @@ module.exports = React.createClass({
                     user.save();
                     this.setState({user: user});
 
-                    var ttUser = require('./model/TTUser');
-                    // ttUser.addTag(user, "tenTags");
-                    // ttUser.addTag(user, "gossip");
-
-
-                    ttUser.searchUsersWithMatchingTagsCloseBy(user)
-                    .then((users) => {
-                      this.setState({usersNear: users});
-                    },
-                    (error) => {
-                      this.setState({errorMessage: error.message});
-                      alert(error.message);
-                    });
-
+                    this.findUsersNear(user);
                   },
                   error: (user, error) => {
                     this.setState({errorMessage: error.message});
@@ -116,6 +103,21 @@ module.exports = React.createClass({
         },
         {enableHighAccuracy: false, timeout: 20000, maximumAge: 90000}
       );
+    },
+    findUsersNear:function(user) {
+      var ttUser = require('./model/TTUser');
+      // ttUser.addTag(user, "tenTags");
+      // ttUser.addTag(user, "gossip");
+
+
+      ttUser.searchUsersWithMatchingTagsCloseBy(user)
+      .then((users) => {
+        this.setState({usersNear: users});
+      },
+      (error) => {
+        this.setState({errorMessage: error.message});
+        alert(error.message);
+      });
     },
     componentWillUnmount: function() {
       this.setState(null);
@@ -218,6 +220,9 @@ module.exports = React.createClass({
     usersItems: function() {
       var usersItems = [];
       var users = this.state.usersNear;
+      if(!users) {
+        return;
+      };
       for(var i = 0; i < users.length; i++){
         var user = users[i];
         var currentPosition = JSON.parse(this.state.currentPosition).coords;

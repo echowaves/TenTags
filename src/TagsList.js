@@ -109,14 +109,13 @@ module.exports = React.createClass({
 
               ttUser.searchUsersWithMatchingTagsCloseBy(that.state.user)
               .then((users) => {
-                that.state.parentComponent.setState({usersNear: users});
+                that.updateParentComponent();
               },
               (error) => {
                 alert(error.message);
               });
               that.forceUpdate();
-              that.state.parentComponent.setState({user: that.state.user});
-              that.state.parentComponent.forceUpdate();
+              that.updateParentComponent();
             },
             function(error) {alert("error removing" + error.message);}
           )}
@@ -124,13 +123,19 @@ module.exports = React.createClass({
       ]
     );
   },
+  updateParentComponent: function() {
+    this.state.parentComponent.setState({user: this.state.user});
+    this.state.parentComponent.findUsersNear(this.state.user);
+    this.state.parentComponent.forceUpdate();
+  },
   backButtonPressed: function() {
     this.props.navigator.pop();
   },
   addNewTagPressed: function() {
     this.props.navigator.push({
       name: 'addtags',
-      parentComponent: this
+      parentComponent: this,
+      user: this.state.user
     });
   }
 
