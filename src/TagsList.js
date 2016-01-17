@@ -24,25 +24,61 @@ module.exports = React.createClass({
     );
   },
   render: function() {
+    var TAGS = this.state.user.get("hashTags");
+    if(!TAGS || TAGS.length == 0) {
+      return (
+        <View style={styles.container}>
+          {this.navbar()}
+          <View style={styles.noTagsContainer}>
+            <Text style={{fontWeight: '200',
+                  fontSize: 18,
+                  color: "#666666",
+                  fontFamily: 'Helvetica',
+                  textAlign: 'center',
+}}>You do not have any tags.</Text>
+            <Text style={{fontWeight: '400',
+                  fontSize: 24,
+                  color: "#888888",
+                  fontFamily: 'Helvetica',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                }}>
+                Add some now.
+              </Text>
+          </View>
+          <View style={styles.addButtonWraper}>
+            <TouchableHighlight style={styles.addButton} onPress={this.addNewTagPressed}>
+              <Text style={styles.addButtonText}>add new tag</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          {this.navbar()}
+          <View style={styles.content}>
+            {this.hashTags()}
+          </View>
+          <View style={styles.addButtonWraper}>
+            <TouchableHighlight style={styles.addButton} onPress={this.addNewTagPressed}>
+              <Text style={styles.addButtonText}>add new tag</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      );
+    }
+  },
+  navbar: function() {
     return (
-      <View style={styles.container}>
-        <View style={styles.navbar}>
-          <TouchableHighlight style={styles.leftMenuItem} onPress={this.backButtonPressed}>
-            <Icon name="chevron-left" size={25} color="#666666" />
-          </TouchableHighlight>
-          <Text style={styles.title}>my tags</Text>
-          <Text comment={"this is a place holder for right nav item"}>   </Text>
-        </View>
-        <View style={styles.content}>
-          {this.hashTags()}
-        </View>
-        <View style={styles.addButtonWraper}>
-          <TouchableHighlight style={styles.addButton} onPress={this.addNewTagPressed}>
-            <Text style={styles.addButtonText}>add new tag</Text>
-          </TouchableHighlight>
-        </View>
+      <View style={styles.navbar}>
+        <TouchableHighlight style={styles.leftMenuItem} onPress={this.backButtonPressed}>
+          <Icon name="chevron-left" size={25} color="#666666" />
+        </TouchableHighlight>
+        <Text style={styles.title}>my tags</Text>
+        <Text comment={"this is a place holder for right nav item"}>   </Text>
       </View>
-    );
+    )
   },
   hashTags: function() {
     var that = this;
@@ -181,7 +217,10 @@ var styles = StyleSheet.create({
     fontFamily: 'Helvetica',
     margin: 3,
     padding: 3,
-
   },
-
+  noTagsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

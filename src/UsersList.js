@@ -156,7 +156,7 @@ module.exports = React.createClass({
                     fontFamily: 'Helvetica',
                     justifyContent: 'center',
                     textAlign: 'center',
-}}>To see who matters around you, add some tags by clicking on</Text>
+}}>To see who matters around you, review your tags by clicking on</Text>
                 <TouchableHighlight onPress={this.onTagsListPres}>
                   <Image source={require('../img/logo.png')}  style={{width: 100, height: 100}}/>
                 </TouchableHighlight>
