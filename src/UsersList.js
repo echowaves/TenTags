@@ -157,7 +157,7 @@ module.exports = React.createClass({
 
 
       var TAGS = this.state.user.get("hashTags");
-      if(!TAGS || TAGS.length == 0) {
+      if(!TAGS || TAGS.length == 0 || this.state.usersNear.length == 0) {
         return (
           <View style={styles.container}>
             {this.navbar()}
