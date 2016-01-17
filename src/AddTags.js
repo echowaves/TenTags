@@ -14,7 +14,7 @@ module.exports = React.createClass({
     return {
       user:null,
       hashTag: "",
-      showCompletions: false,
+      completions: [],
       parentComponent: this.props.route.parentComponent
     };
   },
@@ -28,7 +28,6 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    if (this.state.showCompletions) {
       return (
         <View style={styles.container}>
           {this.navbarView()}
@@ -37,15 +36,6 @@ module.exports = React.createClass({
           {this.addButtonView()}
         </View>
       );
-    } else {
-      return (
-        <View style={styles.container}>
-          {this.navbarView()}
-          {this.textInputView()}
-          {this.addButtonView()}
-        </View>
-      );
-    }
   },
   navbarView: function() {
     return (
@@ -67,31 +57,28 @@ module.exports = React.createClass({
           multiline={false}
           style={styles.textInput}
           placeholder="tag up to 20 characters"
-          onChangeText={(hashTag) => {
-            this.setState({hashTag});
-            this.setState({showCompletions: true});
-          }}
+          onChangeText={(text) => this.typingText(text)}
           value={this.state.hashTag}
           />
       </View>
     )
   },
   completionListView: function() {
-    var text = "qweqweqwe";
-    return (
-      <View>
-        <TouchableHighlight
-          key={text}
-          onPress={() => this.completionSelectedPressed(text)}>
-          <Text style={{
-              color: "orange",
-              fontSize: 20,
-              margin: 5,
-              padding: 5,
-            }}>{text}</Text>
-        </TouchableHighlight>
-      </View>
-    )
+    var that = this;
+    return this.state.completions.map(function(hashTag, index){
+        return(
+            <TouchableHighlight
+              key={hashTag}
+              onPress={() => that.completionSelectedPressed(hashTag)}>
+              <Text style={{
+                  color: "orange",
+                  fontSize: 20,
+                  margin: 5,
+                  padding: 5,
+                }}>{hashTag}</Text>
+            </TouchableHighlight>
+        );
+      });
   },
   addButtonView: function() {
     return (
@@ -105,10 +92,24 @@ module.exports = React.createClass({
   backButtonPressed: function() {
     this.props.navigator.pop();
   },
-  completionSelectedPressed: function(text) {
+  typingText: function(hashTag) {
+    this.setState({hashTag: hashTag});
+
+    var ttHashTag = require('./model/TTHashTag');
+
+    ttHashTag.autoComplete(hashTag)
+    .then((hashTags) => {
+      this.setState({completions: hashTags.map(function(hashTag, index){
+        return hashTag.get("hashTag");
+      })});
+    },
+    (error) => {
+      alert(error.message);
+    });
+  },
+  completionSelectedPressed: function(hashTag) {
     this.setState({
-      hashTag: text,
-      showCompletions: false,
+      hashTag: hashTag,
     });
   },
 });

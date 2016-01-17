@@ -17,9 +17,6 @@ exports.addTag = function(user, tag) {
     );
   };
 
-
-
-
 exports.searchUsersWithMatchingTagsCloseBy = function(user) {
   var subQueries = [];
   var index;

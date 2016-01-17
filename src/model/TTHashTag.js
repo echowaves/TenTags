@@ -10,3 +10,15 @@ exports.add = function(tag) {
     hashTag: tag.toLowerCase()
   }, null, null);
 };
+
+
+exports.autoComplete = function(hashTag) {
+  var searchText = hashTag.toLowerCase();
+
+  var HashTag = Parse.Object.extend("HashTag");
+  var query = new Parse.Query(HashTag);
+  query.startsWith("hashTag", searchText);
+  query.limit(5);
+  // Final list of objects
+  return query.find();
+}
