@@ -123,15 +123,31 @@ module.exports = React.createClass({
     render: function() {
       if (this.state.errorMessage.length > 0) {
         return (
-          <View style={styles.container}>
-            <Text>{this.state.errorMessage}</Text>
+          <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{fontWeight: '400',
+                  fontSize: 24,
+                  color: "#888888",
+                  fontFamily: 'Helvetica',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                }}>
+              {this.state.errorMessage}
+            </Text>
           </View>
         );
       }
       if (!this.state.user) {
         return (
-          <View style={styles.container}>
-            <Text>...loading...</Text>
+          <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{fontWeight: '400',
+                  fontSize: 24,
+                  color: "#888888",
+                  fontFamily: 'Helvetica',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                }}>
+              ...loading...
+            </Text>
           </View>
         );
       }
@@ -145,18 +161,18 @@ module.exports = React.createClass({
             {this.navbar()}
             <View style={styles.noTagsContainer}>
               <Text style={{fontWeight: '200',
-                    fontSize: 18,
+                    fontSize: 14,
                     color: "#666666",
                     fontFamily: 'Helvetica',
                     textAlign: 'center',
-}}>You do not have any tags configured.</Text>
+}}>You don't have any tags overlaping with other users.</Text>
               <Text style={{fontWeight: '400',
                     fontSize: 24,
                     color: "#888888",
                     fontFamily: 'Helvetica',
                     justifyContent: 'center',
                     textAlign: 'center',
-}}>To see who matters around you, review your tags by clicking on</Text>
+}}>To see who matters around you, review your tags by clicking on:</Text>
                 <TouchableHighlight onPress={this.onTagsListPres}>
                   <Image source={require('../img/logo.png')}  style={{width: 100, height: 100}}/>
                 </TouchableHighlight>

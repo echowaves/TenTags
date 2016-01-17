@@ -128,7 +128,10 @@ module.exports = React.createClass({
     this.props.navigator.pop();
   },
   addNewTagPressed: function() {
-    this.props.navigator.push({name: 'addtags'});
+    this.props.navigator.push({
+      name: 'addtags',
+      parentComponent: this
+    });
   }
 
 });
