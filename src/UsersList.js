@@ -58,8 +58,8 @@ module.exports = React.createClass({
                     this.setState({user: user});
 
                     var ttUser = require('./model/TTUser');
-                    ttUser.addTag(user, "tenTags");
-                    ttUser.addTag(user, "gossip");
+                    // ttUser.addTag(user, "tenTags");
+                    // ttUser.addTag(user, "gossip");
 
 
                     ttUser.searchUsersWithMatchingTagsCloseBy(user)
@@ -137,27 +137,61 @@ module.exports = React.createClass({
       }
       var username = this.state.user.get('username');
 
-      return (
-        <View style={styles.container}>
-          <View style={styles.navbar}>
-            <TouchableHighlight style={styles.leftMenuItem} onPress={this.onTagsListPres}>
-              <Image source={require('../img/logo.png')}  style={{width: 40, height: 40}}/>
-            </TouchableHighlight>
-            <Text style={styles.title}>around me</Text>
-            <TouchableHighlight style={styles.rightMenuItem} onPress={this.onConvosListPres}>
-              <Text style={styles.unreadCounter}>0</Text>
-            </TouchableHighlight>
+
+      var TAGS = this.state.user.get("hashTags");
+      if(!TAGS || TAGS.length == 0) {
+        return (
+          <View style={styles.container}>
+            {this.navbar()}
+            <View style={styles.noTagsContainer}>
+              <Text style={{fontWeight: '200',
+                    fontSize: 18,
+                    color: "#666666",
+                    fontFamily: 'Helvetica',
+                    textAlign: 'center',
+}}>You do not have any tags configured.</Text>
+              <Text style={{fontWeight: '400',
+                    fontSize: 24,
+                    color: "#888888",
+                    fontFamily: 'Helvetica',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+}}>To see who matters around you, add some tags by clicking on</Text>
+                <TouchableHighlight onPress={this.onTagsListPres}>
+                  <Image source={require('../img/logo.png')}  style={{width: 100, height: 100}}/>
+                </TouchableHighlight>
+            </View>
           </View>
-          <ScrollView>
-            {this.usersItems()}
-          </ScrollView>
+        );
+      } else {
+        return (
+          <View style={styles.container}>
+            {this.navbar()}
+            <ScrollView>
+              {this.usersItems()}
+            </ScrollView>
+          </View>
+        );
+      }
+    },
+    navbar: function() {
+      return (
+        <View style={styles.navbar}>
+          <TouchableHighlight style={styles.leftMenuItem} onPress={this.onTagsListPres}>
+            <Image source={require('../img/logo.png')}  style={{width: 40, height: 40}}/>
+          </TouchableHighlight>
+          <Text style={styles.title}>around me</Text>
+          <TouchableHighlight style={styles.rightMenuItem} onPress={this.onConvosListPres}>
+            <Text style={styles.unreadCounter}>0</Text>
+          </TouchableHighlight>
         </View>
       );
     },
     onTagsListPres: function() {
       this.props.navigator.push({
         name: 'tagslist',
-        user: this.state.user
+        user: this.state.user,
+        parentComponent: this
       })
     },
     onConvosListPres: function() {
@@ -213,8 +247,12 @@ module.exports = React.createClass({
       borderRadius: 5,
       backgroundColor: "red",
     },
-
     unreadCounter: {
       color: "white",
+    },
+    noTagsContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
     }
   });

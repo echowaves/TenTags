@@ -25,10 +25,17 @@ exports.searchUsersWithMatchingTagsCloseBy = function(user) {
   var index;
   var TAGS = user.get("hashTags");
 
+  if(!TAGS || TAGS.length == 0) {
+    user.save({"hashTags": []});
+    var promise = new Parse.Promise();
+    promise.resolve([]);
+    return promise;
+  }
+
   for	(index = 0; index < TAGS.length; index++) {
     console.log("looking for tags: " + TAGS[index]);
-      var subQuery = new Parse.Query(User).equalTo("hashTags", TAGS[index]);
-      subQueries.push(subQuery);
+    var subQuery = new Parse.Query(User).equalTo("hashTags", TAGS[index]);
+    subQueries.push(subQuery);
   }
 
   // User's location

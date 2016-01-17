@@ -2,6 +2,7 @@ var React = require('react-native');
 var Icon = require('react-native-vector-icons/FontAwesome');
 
 var {
+  Alert,
   Text,
   View,
   StyleSheet,
@@ -15,7 +16,12 @@ module.exports = React.createClass({
     };
   },
   componentWillMount: function() {
-    this.setState({user: this.props.route.user});
+    this.setState(
+      {
+        user: this.props.route.user,
+        parentComponent: this.props.route.parentComponent
+      }
+    );
   },
   render: function() {
     return (
@@ -38,21 +44,49 @@ module.exports = React.createClass({
       </View>
     );
   },
-  removeHashTagPressed: function(hashTag) {
-      alert("hashTag");
-  },
   hashTags: function() {
     var that = this;
     return this.state.user.get('hashTags').map(function(hashTag, index){
       return (
-      <TouchableHighlight key={index} style={styles.hashTagWrapper} onPress={() => that.removeHashTagPressed(hashTag)}>
-        <View style={styles.hashTagHolder}>
-          <Icon name="close" size={8} color="#666666" style={{alignSelf: 'center', marginLeft: 5}} />
-          <Text style={styles.hashTag}>{hashTag}</Text>
-        </View>
-      </TouchableHighlight>
-    );
+        <TouchableHighlight key={index} style={styles.hashTagWrapper} onPress={() => that.removeHashTagPressed(hashTag)}>
+          <View style={styles.hashTagHolder}>
+            <Icon name="close" size={8} color="#666666" style={{alignSelf: 'center', marginLeft: 5}} />
+            <Text style={styles.hashTag}>{hashTag}</Text>
+          </View>
+        </TouchableHighlight>
+      );
     });
+  },
+  removeHashTagPressed: function(hashTag) {
+    var that = this;
+    Alert.alert(
+      "Sure to delete?",
+      hashTag ,
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},
+        {text: 'OK', onPress: () => {
+
+          this.state.user.get("hashTags").splice(this.state.user.get("hashTags").indexOf(hashTag),1);
+          this.state.user.save().then(
+            function(object) {
+              var ttUser = require('./model/TTUser');
+
+              ttUser.searchUsersWithMatchingTagsCloseBy(that.state.user)
+              .then((users) => {
+                that.state.parentComponent.setState({usersNear: users});
+              },
+              (error) => {
+                alert(error.message);
+              });
+              that.forceUpdate();
+              that.state.parentComponent.setState({user: that.state.user});
+              that.state.parentComponent.forceUpdate();
+            },
+            function(error) {alert("error removing" + error.message);}
+          )}
+        },
+      ]
+    );
   },
   backButtonPressed: function() {
     this.props.navigator.pop();
@@ -136,8 +170,8 @@ var styles = StyleSheet.create({
     padding: 1,
   },
   hashTagHolder: {
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
   },
   hashTag: {
     // lineHeight: 25,
@@ -149,7 +183,5 @@ var styles = StyleSheet.create({
     padding: 3,
 
   },
-
-
 
 });
