@@ -11,6 +11,8 @@ var {
   View,
 } = React;
 
+var globalStyles = require('./GlobalStyles');
+
 // Create our component
 module.exports = React.createClass({
   render: function() {
@@ -33,7 +35,7 @@ module.exports = React.createClass({
 
         <TouchableHighlight onPress={() => this.onConvoPresed()}>
         <View style={styles.bottomWrapper}>
-          <View style={[styles.hashTags]}>
+          <View style={globalStyles.hashTags}>
             {this.hashTags()}
           </View>
           <View>
@@ -53,8 +55,10 @@ module.exports = React.createClass({
   },
   hashTags: function() {
     return this.props.user.get('hashTags').map(function(hashTag, index){
-      return <View key={index} style={styles.hashTagWrapper}>
-        <Text style={styles.hashTag}>{hashTag}</Text>
+      return <View key={index} style={globalStyles.hashTagWrapper}>
+        <View style={globalStyles.hashTagHolder}>
+          <Text style={globalStyles.hashTag}>{hashTag}</Text>
+        </View>
       </View>
     });
   },
@@ -70,7 +74,8 @@ var styles = StyleSheet.create({
   userItemLine: {
     flex: 1,
     borderBottomWidth: 1,
-    borderColor: "#666666"
+    borderColor: "#666666",
+    backgroundColor: "#fff2e5",
   },
   topWrapper: {
 
@@ -86,31 +91,6 @@ var styles = StyleSheet.create({
     margin: 1,
     padding: 1,
     color: "#666666",
-  },
-  hashTags: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    // height: 35,
-  },
-  hashTagWrapper: {
-    borderRadius: 5,
-    // borderColor: "#666666",
-    backgroundColor: "#999966",
-    margin: 1,
-    padding: 1,
-  },
-  hashTag: {
-    // lineHeight: 25,
-    fontWeight: '400',
-    fontSize: 25,
-    // color: "#003399",
-    fontFamily: 'Helvetica',
-    margin: 3,
-    padding: 3,
-
   },
   rightArrow: {
     margin: 3,

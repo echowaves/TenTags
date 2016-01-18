@@ -8,6 +8,8 @@ var {
   TouchableHighlight
 } = React;
 
+var globalStyles = require('./GlobalStyles');
+
 module.exports = React.createClass({
   getInitialState: function() {
     return {
@@ -45,7 +47,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: 60,
-    backgroundColor: "#779966",
+    backgroundColor: "#C4DBA3",
   },
   leftMenuItem: {
     alignSelf: 'flex-end',

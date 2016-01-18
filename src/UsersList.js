@@ -11,6 +11,8 @@ var {
   AsyncStorage
 } = React;
 
+var globalStyles = require('./GlobalStyles');
+
 var UserItem = require('./UserItem');
 
 function randomString(length) {
@@ -159,7 +161,7 @@ module.exports = React.createClass({
       var TAGS = this.state.user.get("hashTags");
       if(!TAGS || TAGS.length == 0 || this.state.usersNear.length == 0) {
         return (
-          <View style={styles.container}>
+          <View style={globalStyles.container}>
             {this.navbar()}
             <View style={styles.noTagsContainer}>
               <Text style={{fontWeight: '200',
@@ -194,12 +196,12 @@ module.exports = React.createClass({
     },
     navbar: function() {
       return (
-        <View style={styles.navbar}>
-          <TouchableHighlight style={styles.leftMenuItem} onPress={() => this.onTagsListPresed()}>
+        <View style={globalStyles.navbar}>
+          <TouchableHighlight style={globalStyles.leftMenuItem} onPress={() => this.onTagsListPresed()}>
             <Image source={require('../img/logo.png')}  style={{width: 40, height: 40}}/>
           </TouchableHighlight>
-          <Text style={styles.title}>around me</Text>
-          <TouchableHighlight style={styles.rightMenuItem} onPress={() => this.onConvosListPresed()}>
+          <Text style={globalStyles.title}>around me</Text>
+          <TouchableHighlight style={globalStyles.rightMenuItem} onPress={() => this.onConvosListPresed()}>
             <Text style={styles.unreadCounter}>0</Text>
           </TouchableHighlight>
         </View>
@@ -236,39 +238,6 @@ module.exports = React.createClass({
   });
 
   var styles = StyleSheet.create({
-    container: {
-      flex: 1
-    },
-    navbar: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      height: 60,
-      backgroundColor: "#779966",
-      // #C4DBA3
-    },
-    leftMenuItem: {
-      alignSelf: 'flex-end',
-      margin: 5,
-    },
-    title: {
-      fontWeight: '200',
-      fontSize: 25,
-      color: "#444444",
-      fontFamily: 'Helvetica',
-      alignSelf: 'flex-end',
-      margin: 5,
-    },
-    rightMenuItem: {
-      alignSelf: 'center',
-      margin: 15,
-      marginTop: 22,
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingTop: 4,
-      paddingBottom: 4,
-      borderRadius: 5,
-      backgroundColor: "red",
-    },
     unreadCounter: {
       color: "white",
     },

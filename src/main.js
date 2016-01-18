@@ -21,6 +21,7 @@ var ROUTES = {
   convo: Convo,
 };
 
+var globalStyles = require('./GlobalStyles');
 
 module.exports = React.createClass({
   componentWillMount: function() {
