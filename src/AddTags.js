@@ -31,7 +31,7 @@ module.exports = React.createClass({
 
   render: function() {
       return (
-        <View style={styles.container}>
+        <View style={globalStyles.container}>
           {this.navbarView()}
           {this.textInputView()}
           {this.completionListView()}
@@ -41,11 +41,11 @@ module.exports = React.createClass({
   },
   navbarView: function() {
     return (
-      <View style={styles.navbar}>
-        <TouchableHighlight style={styles.leftMenuItem} onPress={this.backButtonPressed}>
+      <View style={globalStyles.navbar}>
+        <TouchableHighlight style={globalStyles.leftMenuItem} onPress={this.backButtonPressed}>
             <Icon name="chevron-left" size={25} color="#666666" />
         </TouchableHighlight>
-        <Text style={styles.title}>add tags</Text>
+        <Text style={globalStyles.title}>add tags</Text>
         <Text comment={"this is a place holder for right nav item"}>   </Text>
       </View>
     )
@@ -85,9 +85,9 @@ module.exports = React.createClass({
   },
   addButtonView: function() {
     return (
-      <View style={styles.addButtonWraper}>
-        <TouchableHighlight style={styles.addButton} onPress={() => this.addNewTagPressed()}>
-          <Text style={styles.addButtonText}>add this tag</Text>
+      <View style={globalStyles.buttonWraper}>
+        <TouchableHighlight style={globalStyles.button} onPress={() => this.addNewTagPressed()}>
+          <Text style={globalStyles.buttonText}>add this tag</Text>
         </TouchableHighlight>
       </View>
     )
@@ -138,27 +138,7 @@ module.exports = React.createClass({
 
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  navbar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    height: 60,
-    backgroundColor: "#C4DBA3",
-  },
-  leftMenuItem: {
-    alignSelf: 'flex-end',
-    margin: 5,
-  },
-  title: {
-    fontWeight: '200',
-    fontSize: 25,
-    color: "#444444",
-    fontFamily: 'Helvetica',
-    alignSelf: 'flex-end',
-    margin: 5,
-  },
+
   textInputWrapper: {
 
   },
@@ -173,30 +153,6 @@ var styles = StyleSheet.create({
     borderRadius: 5,
     margin: 3,
     padding: 3,
-  },
-  addButtonWraper: {
-    alignSelf: 'center',
-    margin: 15,
-    marginTop: 22,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingTop: 4,
-    paddingBottom: 4,
-    borderRadius: 5,
-    backgroundColor: "green",
-  },
-  addButton: {
-
-  },
-  addButtonText: {
-    color: "white",
-    fontWeight: '400',
-    fontSize: 25,
-    // color: "#003399",
-    fontFamily: 'Helvetica',
-    margin: 3,
-    padding: 3,
-
   },
 
 });

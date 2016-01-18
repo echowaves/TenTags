@@ -128,13 +128,7 @@ module.exports = React.createClass({
       if (this.state.errorMessage.length > 0) {
         return (
           <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontWeight: '400',
-                  fontSize: 24,
-                  color: "#888888",
-                  fontFamily: 'Helvetica',
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                }}>
+            <Text style={[globalStyles.textBig, {textAlign: 'center',}]}>
               {this.state.errorMessage}
             </Text>
           </View>
@@ -143,13 +137,7 @@ module.exports = React.createClass({
       if (!this.state.user) {
         return (
           <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{fontWeight: '400',
-                  fontSize: 24,
-                  color: "#888888",
-                  fontFamily: 'Helvetica',
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                }}>
+            <Text style={[globalStyles.textBig, {textAlign: 'center',}]}>
               ...loading...
             </Text>
           </View>
@@ -163,20 +151,14 @@ module.exports = React.createClass({
         return (
           <View style={globalStyles.container}>
             {this.navbar()}
-            <View style={styles.noTagsContainer}>
-              <Text style={{fontWeight: '200',
-                    fontSize: 14,
-                    color: "#666666",
-                    fontFamily: 'Helvetica',
-                    textAlign: 'center',
-}}>You don't have any tags overlaping with other users.</Text>
-              <Text style={{fontWeight: '400',
-                    fontSize: 24,
-                    color: "#888888",
-                    fontFamily: 'Helvetica',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-}}>To see who matters around you, review your tags by clicking on:</Text>
+            <View style={globalStyles.emptyContainer}>
+              <Text
+                style={[globalStyles.textSmall, {textAlign: 'center'}]}>
+                You don't have any tags overlaping with other users.
+              </Text>
+              <Text style={[globalStyles.textBig, {textAlign: 'center',}]}>
+                To see who matters around you, review your tags by clicking on:
+              </Text>
                 <TouchableHighlight onPress={() => this.onTagsListPresed()}>
                   <Image source={require('../img/logo.png')}  style={{width: 100, height: 100}}/>
                 </TouchableHighlight>
@@ -241,9 +223,4 @@ module.exports = React.createClass({
     unreadCounter: {
       color: "white",
     },
-    noTagsContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    }
   });

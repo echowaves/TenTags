@@ -31,20 +31,11 @@ module.exports = React.createClass({
       return (
         <View style={globalStyles.container}>
           {this.navbar()}
-          <View style={styles.noTagsContainer}>
-            <Text style={{fontWeight: '200',
-                  fontSize: 18,
-                  color: "#666666",
-                  fontFamily: 'Helvetica',
-                  textAlign: 'center',
-}}>You do not have any tags.</Text>
-            <Text style={{fontWeight: '400',
-                  fontSize: 24,
-                  color: "#888888",
-                  fontFamily: 'Helvetica',
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                }}>
+          <View style={globalStyles.emptyContainer}>
+            <Text style={[globalStyles.textSmall, {textAlign: 'center'}]}>
+              You do not have any tags.
+            </Text>
+            <Text style={[globalStyles.textBig, {textAlign: 'center'}]}>
                 Add some now.
               </Text>
           </View>
@@ -146,9 +137,4 @@ module.exports = React.createClass({
 
 var styles = StyleSheet.create({
 
-  noTagsContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });

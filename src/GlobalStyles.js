@@ -107,4 +107,26 @@ module.exports = StyleSheet.create({
     padding: 3,
   },
 
+  textSmall: {
+    fontWeight: '200',
+    fontSize: 14,
+    color: "#666666",
+    fontFamily: 'Helvetica',
+    // justifyContent: 'center',
+  },
+  textBig: {
+    fontWeight: '400',
+    fontSize: 24,
+    color: "#888888",
+    fontFamily: 'Helvetica',
+    // justifyContent: 'center',
+  },
+
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+
+
 });

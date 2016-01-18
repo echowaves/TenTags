@@ -17,16 +17,16 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <View style={styles.container}>
-        <View style={styles.navbar}>
-          <TouchableHighlight style={styles.leftMenuItem} onPress={this.backButtonPressed}>
+      <View style={globalStyles.container}>
+        <View style={globalStyles.navbar}>
+          <TouchableHighlight style={globalStyles.leftMenuItem} onPress={this.backButtonPressed}>
               <Icon name="chevron-left" size={25} color="#666666" />
           </TouchableHighlight>
-          <Text style={styles.title}>my convos</Text>
+          <Text style={globalStyles.title}>my convos</Text>
           <Text comment={"this is a place holder for right nav item"}>   </Text>
         </View>
 
-        <View style={styles.content}>
+        <View style={globalStyles.content}>
           <Text>ConvosList Coming Soon.</Text>
         </View>
       </View>
@@ -40,26 +40,4 @@ module.exports = React.createClass({
 
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  navbar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    height: 60,
-    backgroundColor: "#C4DBA3",
-  },
-  leftMenuItem: {
-    alignSelf: 'flex-end',
-    margin: 5,
-  },
-  title: {
-    fontWeight: '200',
-    fontSize: 25,
-    color: "#444444",
-    fontFamily: 'Helvetica',
-    alignSelf: 'flex-end',
-    margin: 5,
-  },
-
 });
