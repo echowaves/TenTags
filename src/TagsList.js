@@ -182,7 +182,7 @@ var styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 4,
     borderRadius: 5,
-    backgroundColor: "red",
+    backgroundColor: "green",
   },
   addButton: {
 

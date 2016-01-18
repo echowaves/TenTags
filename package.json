@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "node-geo-distance": "^1.2.0",
-    "parse": "^1.6.13",
+    "parse": "^1.6.14",
     "parse-react": "^0.5.0",
     "react-native": "facebook/react-native",
     "react-native-vector-icons": "^1.0.4",

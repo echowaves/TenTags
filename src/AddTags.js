@@ -53,11 +53,11 @@ module.exports = React.createClass({
       <View style={styles.textInputWrapper}>
         <TextInput
           autoFocus={true}
-          autoCapitalize="none"
+          autoCapitalize='none'
           maxLength={20}
           multiline={false}
           style={styles.textInput}
-          placeholder="tag up to 20 characters"
+          placeholder='tag up to 20 characters'
           onChangeText={(text) => this.typingText(text)}
           value={this.state.hashTag}
           />
@@ -181,7 +181,7 @@ var styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 4,
     borderRadius: 5,
-    backgroundColor: "grey",
+    backgroundColor: "green",
   },
   addButton: {
 

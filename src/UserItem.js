@@ -12,7 +12,7 @@ var {
 } = React;
 
 // Create our component
-var UserItem = React.createClass({
+module.exports = React.createClass({
   render: function() {
     var coord1 = {
       latitude: this.props.currentPosition.latitude,
@@ -31,7 +31,7 @@ var UserItem = React.createClass({
           </Text>
         </View>
 
-        <TouchableHighlight>
+        <TouchableHighlight onPress={() => this.onConvoPresed()}>
         <View style={styles.bottomWrapper}>
           <View style={[styles.hashTags]}>
             {this.hashTags()}
@@ -45,6 +45,11 @@ var UserItem = React.createClass({
       </TouchableHighlight>
       </View>
     );
+  },
+  onConvoPresed: function() {
+    this.props.navigator.push({
+      name: 'convo',
+    });
   },
   hashTags: function() {
     return this.props.user.get('hashTags').map(function(hashTag, index){
@@ -112,6 +117,3 @@ var styles = StyleSheet.create({
     padding: 3,
   }
 });
-
-// Make this code available elsewhere
-module.exports = UserItem;

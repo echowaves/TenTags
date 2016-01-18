@@ -17,8 +17,8 @@ function randomString(length) {
   return Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
 };
 
-module.exports = React.createClass({
 
+module.exports = React.createClass({
   getInitialState: function() {
     return {
       user: null,
@@ -175,7 +175,7 @@ module.exports = React.createClass({
                     justifyContent: 'center',
                     textAlign: 'center',
 }}>To see who matters around you, review your tags by clicking on:</Text>
-                <TouchableHighlight onPress={this.onTagsListPres}>
+                <TouchableHighlight onPress={() => this.onTagsListPresed()}>
                   <Image source={require('../img/logo.png')}  style={{width: 100, height: 100}}/>
                 </TouchableHighlight>
             </View>
@@ -195,24 +195,24 @@ module.exports = React.createClass({
     navbar: function() {
       return (
         <View style={styles.navbar}>
-          <TouchableHighlight style={styles.leftMenuItem} onPress={this.onTagsListPres}>
+          <TouchableHighlight style={styles.leftMenuItem} onPress={() => this.onTagsListPresed()}>
             <Image source={require('../img/logo.png')}  style={{width: 40, height: 40}}/>
           </TouchableHighlight>
           <Text style={styles.title}>around me</Text>
-          <TouchableHighlight style={styles.rightMenuItem} onPress={this.onConvosListPres}>
+          <TouchableHighlight style={styles.rightMenuItem} onPress={() => this.onConvosListPresed()}>
             <Text style={styles.unreadCounter}>0</Text>
           </TouchableHighlight>
         </View>
       );
     },
-    onTagsListPres: function() {
+    onTagsListPresed: function() {
       this.props.navigator.push({
         name: 'tagslist',
         user: this.state.user,
         parentComponent: this
       })
     },
-    onConvosListPres: function() {
+    onConvosListPresed: function() {
       this.props.navigator.push({
         name: 'convoslist',
       });
@@ -227,7 +227,7 @@ module.exports = React.createClass({
         var user = users[i];
         var currentPosition = JSON.parse(this.state.currentPosition).coords;
         usersItems.push(
-          <UserItem key={user.id} user={user} currentPosition={currentPosition} />
+          <UserItem key={user.id} user={user} currentPosition={currentPosition} navigator={this.props.navigator}/>
         )
       }
       return usersItems;
@@ -244,6 +244,7 @@ module.exports = React.createClass({
       justifyContent: 'space-between',
       height: 60,
       backgroundColor: "#779966",
+      // #C4DBA3
     },
     leftMenuItem: {
       alignSelf: 'flex-end',

@@ -11,12 +11,14 @@ var UsersList = require('./UsersList');
 var TagsList = require('./TagsList');
 var AddTags = require('./AddTags');
 var ConvosList = require('./ConvosList');
+var Convo = require('./Convo');
 
 var ROUTES = {
   userslist: UsersList,
   tagslist: TagsList,
   addtags: AddTags,
   convoslist: ConvosList,
+  convo: Convo,
 };
 
 
