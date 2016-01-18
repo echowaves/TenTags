@@ -167,7 +167,7 @@ module.exports = React.createClass({
         );
       } else {
         return (
-          <View style={styles.container}>
+          <View style={globalStyles.container}>
             {this.navbar()}
             <ScrollView>
               {this.usersItems()}
