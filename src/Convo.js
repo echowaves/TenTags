@@ -73,7 +73,7 @@ module.exports = React.createClass({
             messages={this.getMessages()}
             handleSend={() => this.handleSend()}
             maxHeight={Dimensions.get('window').height - 64} // 64 for the navBar
-
+            style={globalStyles.container}
             styles={{
               bubbleLeft: {
                 backgroundColor: '#e6e6eb',

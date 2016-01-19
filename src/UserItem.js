@@ -49,6 +49,10 @@ module.exports = React.createClass({
     );
   },
   onConvoPresed: function() {
+
+
+
+
     this.props.navigator.push({
       name: 'convo',
     });
