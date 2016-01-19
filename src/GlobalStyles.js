@@ -25,7 +25,7 @@ module.exports = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height: 60,
+    height: 64,
     // backgroundColor: "#779966",
     backgroundColor: "#669999",
   },

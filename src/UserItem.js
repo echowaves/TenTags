@@ -53,15 +53,39 @@ module.exports = React.createClass({
       name: 'convo',
     });
   },
+  hashTagStyle: function(hashTag) {
+    var hashTags = this.props.currentUser.get('hashTags');
+    if(hashTags.indexOf(hashTag) >= 0) {
+      return {
+        fontWeight: '400',
+        fontSize: 25,
+        color: "#669999",
+        fontFamily: 'Helvetica',
+        margin: 3,
+        padding: 3,
+        }
+    } else {
+      return {
+        fontWeight: '200',
+        fontSize: 15,
+        color: "#669999",
+        fontFamily: 'Helvetica',
+        margin: 3,
+        padding: 3,
+        }
+    }
+  },
   hashTags: function() {
+    var that = this;
     return this.props.user.get('hashTags').map(function(hashTag, index){
       return <View key={index} style={globalStyles.hashTagWrapper}>
         <View style={globalStyles.hashTagHolder}>
-          <Text style={globalStyles.hashTag}>{hashTag}</Text>
+          <Text style={that.hashTagStyle(hashTag)}>{hashTag}</Text>
         </View>
       </View>
     });
   },
+
   border: function(color) {
     return {
       borderColor: color,

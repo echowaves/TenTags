@@ -211,7 +211,7 @@ module.exports = React.createClass({
         var user = users[i];
         var currentPosition = JSON.parse(this.state.currentPosition).coords;
         usersItems.push(
-          <UserItem key={user.id} user={user} currentPosition={currentPosition} navigator={this.props.navigator}/>
+          <UserItem key={user.id} currentUser={this.state.user} user={user} currentPosition={currentPosition} navigator={this.props.navigator}/>
         )
       }
       return usersItems;
