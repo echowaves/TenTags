@@ -57,7 +57,7 @@ module.exports = React.createClass({
   navbar: function() {
     return (
       <View style={globalStyles.navbar}>
-        <TouchableHighlight style={globalStyles.leftMenuItem} onPress={this.backButtonPressed}>
+        <TouchableHighlight style={globalStyles.leftMenuItem} onPress={() => this.backButtonPressed()}>
           <Icon name="chevron-left" size={25} color="#666666" />
         </TouchableHighlight>
         <Text style={globalStyles.title}>my tags</Text>

@@ -21,7 +21,6 @@ exports.autoComplete = function(hashTag) {
 
   var searchText = hashTag.toLowerCase();
 
-
   var HashTag = Parse.Object.extend("HashTag");
   var query = new Parse.Query(HashTag);
   query.startsWith("hashTag", searchText);
