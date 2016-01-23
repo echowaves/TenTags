@@ -1,11 +1,11 @@
 var React = require('react-native');
 var Parse = require('parse/react-native');
 var ParseReact = require('parse-react/react-native');
-var LayerAPI = require('layer-api');
+// var LayerAPI = require('layer-api');
 
 var {
   StyleSheet,
-  Navigator
+  Navigator,
 } = React;
 
 var UsersList = require('./UsersList');
@@ -41,21 +41,26 @@ module.exports = React.createClass({
     var API_TOKEN = "ta0xZx4qb29lKCE4Yz8ffE3zwshR6POIbHZs2fA8uoeFpptt";
     var APP_ID = "layer:///apps/staging/010170ac-978a-11e5-b517-3a8a16005a40";
 
-    var layer = new LayerAPI({
-      token: API_TOKEN,
-      appId: APP_ID
-    });
+    // const https = require('https');
+    // const http = require('http');
+    // var keepAliveAgent = new Https.Agent({ keepAlive: true });
+
+    // var layer = new LayerAPI({
+    //   token: API_TOKEN,
+    //   appId: APP_ID,
+    //   // agent: keepAliveAgent
+    // });
 
     // Create a Conversation
-    layer.conversations.create({participants: ['abcd']}, function(err, res) {
-      var cid = res.body.id;
+    // layer.conversations.create({participants: ['abcd']}, function(err, res) {
+    //   var cid = res.body.id;
+    //
+    //   // Send a Message
+    //   layer.messages.sendTextFromUser(cid, 'abcd', 'Hello, World!', function(err, res) {
+    //     console.log(err || res.body);
+    //   });
+    // });
 
-      // Send a Message
-      layer.messages.sendTextFromUser(cid, 'abcd', 'Hello, World!', function(err, res) {
-        console.log(err || res.body);
-      });
-    });
-    
   },
   renderScene: function(route, navigator) {
     var Component = ROUTES[route.name]; // ROUTES['signin'] => Signin

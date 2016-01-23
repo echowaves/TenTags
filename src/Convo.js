@@ -1,6 +1,7 @@
 var React = require('react-native');
 var Icon = require('react-native-vector-icons/FontAwesome');
 var GiftedMessenger = require('react-native-gifted-messenger');
+var Pusher = require('pusher-websocket-iso/react-native');
 
 
 var {
@@ -17,32 +18,32 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
     };
+
+
+
+    // var pusher = new Pusher("d0d034d3f44a78bc0ba9");
+
+    var pusher = new Pusher('d0d034d3f44a78bc0ba9', {
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('test_channel');
+    channel.bind('my_event', function(data) {
+      alert(data.message);
+    });
+
+
   },
   getMessages() {
     return [
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: "Yes, and I use Gifted Messenger!", name: 'Developer', image: null, position: 'right', date: new Date(2015, 0, 17, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: "Yes, and I use Gifted Messenger!", name: 'Developer', image: null, position: 'right', date: new Date(2015, 0, 17, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: "Yes, and I use Gifted Messenger!", name: 'Developer', image: null, position: 'right', date: new Date(2015, 0, 17, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: "Yes, and I use Gifted Messenger!", name: 'Developer', image: null, position: 'right', date: new Date(2015, 0, 17, 19, 0)},
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: "Yes, and I use Gifted Messenger!", name: 'Developer', image: null, position: 'right', date: new Date(2015, 0, 17, 19, 0)},
       {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
       {text: "Yes, and I use Gifted Messenger!", name: 'Developer', image: null, position: 'right', date: new Date(2015, 0, 17, 19, 0)},
     ];
   },
   handleSend(message = {}, rowID = null) {
     // Send message.text to your server
+    alert(message);
+    alert(rowID);
   },
   handleReceive() {
     this._GiftedMessenger.appendMessage({
@@ -71,7 +72,7 @@ module.exports = React.createClass({
           <GiftedMessenger
             ref={(c) => this._GiftedMessenger = c}
             messages={this.getMessages()}
-            handleSend={() => this.handleSend()}
+            handleSend={this.handleSend}
             maxHeight={Dimensions.get('window').height - 64} // 64 for the navBar
             style={globalStyles.container}
             styles={{

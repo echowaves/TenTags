@@ -71,7 +71,7 @@ module.exports = React.createClass({
     } else {
       return {
         fontWeight: '200',
-        fontSize: 15,
+        fontSize: 20,
         color: "#669999",
         fontFamily: 'Helvetica',
         margin: 3,
