@@ -15,24 +15,29 @@ var {
 var globalStyles = require('./GlobalStyles');
 
 module.exports = React.createClass({
-  getInitialState: function() {
-    return {
-    };
-
-
-
-    // var pusher = new Pusher("d0d034d3f44a78bc0ba9");
-
+  componentWillMount: function() {
     var pusher = new Pusher('d0d034d3f44a78bc0ba9', {
       encrypted: true
     });
 
-    var channel = pusher.subscribe('test_channel');
-    channel.bind('my_event', function(data) {
-      alert(data.message);
+    var that = this;
+    var channel = pusher.subscribe('my_channel');
+    channel.bind('new_message', function(data) {
+      that.handleReceive({
+        text: data['message'],
+        name: data['name'],
+        // image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
+        image: null,
+        position: 'left', // left if received, right if sent
+        date: new Date(),
+      });
+
     });
 
-
+  },
+  getInitialState: function() {
+    return {
+    };
   },
   getMessages() {
     return [
@@ -45,22 +50,15 @@ module.exports = React.createClass({
     alert(message);
     alert(rowID);
   },
-  handleReceive() {
-    this._GiftedMessenger.appendMessage({
-      text: 'Received message',
-      name: 'Friend',
-      image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
-      position: 'left',
-      date: new Date(),
-    });
+  handleReceive(message = {}) {
+    this._GiftedMessenger.appendMessage(message);
   },
-
   render: function() {
     return (
       <View style={globalStyles.container}>
         <View style={globalStyles.navbar}>
           <TouchableHighlight style={globalStyles.leftMenuItem} onPress={this.backButtonPressed}>
-              <Icon name="chevron-left" size={25} color="#666666" />
+            <Icon name="chevron-left" size={25} color="#666666" />
           </TouchableHighlight>
           <Text style={globalStyles.title}>convo</Text>
           <Text comment={"this is a place holder for right nav item"}>   </Text>
@@ -74,6 +72,8 @@ module.exports = React.createClass({
             messages={this.getMessages()}
             handleSend={this.handleSend}
             maxHeight={Dimensions.get('window').height - 64} // 64 for the navBar
+            displayNames={false}
+
             style={globalStyles.container}
             styles={{
               bubbleLeft: {
