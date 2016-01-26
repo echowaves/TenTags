@@ -50,11 +50,10 @@ module.exports = React.createClass({
   },
   onConvoPresed: function() {
 
-
-
-
     this.props.navigator.push({
       name: 'convo',
+      user: this.props.user,
+      currentUser: this.props.currentUser
     });
   },
   hashTagStyle: function(hashTag) {

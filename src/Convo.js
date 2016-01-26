@@ -33,7 +33,6 @@ module.exports = React.createClass({
       });
 
     });
-
   },
   getInitialState: function() {
     return {
@@ -47,8 +46,23 @@ module.exports = React.createClass({
   },
   handleSend(message = {}, rowID = null) {
     // Send message.text to your server
-    alert(message);
-    alert(rowID);
+
+    var ttMessage = require('./model/TTMessage');
+
+
+    var user = this.props.route.user;
+    var currentUser = this.props.route.currentUser;
+
+    // var channelId = ttMessage.generateChannelName(currentUser,user);
+    // alert(channelId);
+
+    ttMessage.addMessage(user, currentUser, message,rowID)
+    .then(() => {
+    },
+    (error) => {
+      alert(error.message);
+    });
+
   },
   handleReceive(message = {}) {
     this._GiftedMessenger.appendMessage(message);
