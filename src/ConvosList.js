@@ -20,7 +20,9 @@ module.exports = React.createClass({
       <View style={globalStyles.container}>
         <View style={globalStyles.navbar}>
           <TouchableHighlight style={globalStyles.leftMenuItem} onPress={this.backButtonPressed}>
-              <Icon name="chevron-left" size={25} color="#666666" />
+            <View style={{flexDirection: 'row'}}>
+              <Icon name="chevron-left" size={25} color="#666666" /><Text>     </Text>
+            </View>
           </TouchableHighlight>
           <Text style={globalStyles.title}>my convos</Text>
           <Text comment={"this is a place holder for right nav item"}>   </Text>

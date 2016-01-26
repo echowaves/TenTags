@@ -49,7 +49,7 @@ module.exports = React.createClass({
           date: message.createdAt
         };
       });
-      this.setState({messages: mappedResults});
+      this.setState({messages: mappedResults.reverse()});
       // this.forceUpdate();
     },
     (error) => {
@@ -85,7 +85,9 @@ module.exports = React.createClass({
       <View style={globalStyles.container}>
         <View style={globalStyles.navbar}>
           <TouchableHighlight style={globalStyles.leftMenuItem} onPress={this.backButtonPressed}>
-            <Icon name="chevron-left" size={25} color="#666666" />
+            <View style={{flexDirection: 'row'}}>
+              <Icon name="chevron-left" size={25} color="#666666" /><Text>     </Text>
+            </View>
           </TouchableHighlight>
           <Text style={globalStyles.title}>convo</Text>
           <Text comment={"this is a place holder for right nav item"}>   </Text>

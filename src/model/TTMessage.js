@@ -30,7 +30,7 @@ module.exports = {
     var promise = new Parse.Promise();
 
     var query = new Parse.Query(Message);
-    query.containsAll("participants", [user.id, currentUser.id]).ascending("createdAt");
+    query.containsAll("participants", [user.id, currentUser.id]).descending("createdAt");
     query.find({
       success: function(results) {
 // alert("found " + results.length + " results");
