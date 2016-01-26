@@ -53,13 +53,15 @@ module.exports = React.createClass({
                   success: (user) => {
                     console.log("1: user is initialized... " + user);
                     //update coordinates and add default tags here
-
+                    var that = this;
                     var point = new Parse.GeoPoint({latitude: position.coords.latitude, longitude: position.coords.longitude});
                     user.set("location", point);
-                    user.save();
-                    this.setState({user: user});
-
-                    this.findUsersNear(user);
+                    user.save().then(function (user) {
+                        that.findUsersNear(user);
+                    }, function (error) {
+                      alert(error.message)
+                    });
+                    that.setState({user: user});
                   },
                   error: (user, error) => {
                     this.setState({errorMessage: error.message});
@@ -69,23 +71,15 @@ module.exports = React.createClass({
               } else {
                 console.log("3: user is initialized... " + user);
                 user.fetch();
-
+                var that = this;
                 var point = new Parse.GeoPoint({latitude: position.coords.latitude, longitude: position.coords.longitude});
                 user.set("location", point);
-                user.save();
-                this.setState({user: user});
-
-                var ttUser = require('./model/TTUser');
-
-                ttUser.searchUsersWithMatchingTagsCloseBy(user)
-                .then((users) => {
-                  this.setState({usersNear: users});
-                },
-                (error) => {
-                  this.setState({errorMessage: error.message});
-                  alert(error.message);
+                user.save().then(function (user) {
+                    that.findUsersNear(user);
+                }, function (error) {
+                  alert(error.message)
                 });
-
+                that.setState({user: user});
               }; // if user
             },
             (error) => {
@@ -106,7 +100,7 @@ module.exports = React.createClass({
         {enableHighAccuracy: false, timeout: 20000, maximumAge: 90000}
       );
     },
-    findUsersNear:function(user) {
+    findUsersNear: function(user) {
       var ttUser = require('./model/TTUser');
       // ttUser.addTag(user, "tenTags");
       // ttUser.addTag(user, "gossip");

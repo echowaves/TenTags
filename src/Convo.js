@@ -19,10 +19,14 @@ module.exports = React.createClass({
     var pusher = new Pusher('d0d034d3f44a78bc0ba9', {
       encrypted: true
     });
+    var user = this.props.route.user;
+    var currentUser = this.props.route.currentUser;
+
+    var ttMessage = require('./model/TTMessage');
 
     var that = this;
-    var channel = pusher.subscribe('my_channel');
-    channel.bind('new_message', function(data) {
+    var channel = pusher.subscribe( ttMessage.generateChannelName(user, currentUser));
+    channel.bind('message', function(data) {
       that.handleReceive({
         text: data['message'],
         name: data['name'],
@@ -34,10 +38,7 @@ module.exports = React.createClass({
 
     });
 
-    var user = this.props.route.user;
-    var currentUser = this.props.route.currentUser;
 
-    var ttMessage = require('./model/TTMessage');
     ttMessage.getMessages(user, currentUser)
     .then((results) => {
       var mappedResults = results.map(function(message, index){
