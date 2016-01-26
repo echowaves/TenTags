@@ -33,28 +33,41 @@ module.exports = React.createClass({
       });
 
     });
+
+    var user = this.props.route.user;
+    var currentUser = this.props.route.currentUser;
+
+    var ttMessage = require('./model/TTMessage');
+    ttMessage.getMessages(user, currentUser)
+    .then((results) => {
+      var mappedResults = results.map(function(message, index){
+        return {
+          text: message.get('message'),
+          name: null,
+          image: null,
+          position: message.get('sender') != currentUser.id ? 'left' : 'right',
+          date: message.createdAt
+        };
+      });
+      this.setState({messages: mappedResults});
+      // this.forceUpdate();
+    },
+    (error) => {
+      alert(error.message);
+    });
   },
   getInitialState: function() {
     return {
+      messages: []
     };
-  },
-  getMessages() {
-    return [
-      {text: 'Are you building a chat app?', name: 'React-Native', image: null, position: 'left', date: new Date(2015, 0, 16, 19, 0)},
-      {text: "Yes, and I use Gifted Messenger!", name: 'Developer', image: null, position: 'right', date: new Date(2015, 0, 17, 19, 0)},
-    ];
   },
   handleSend(message = {}, rowID = null) {
     // Send message.text to your server
 
     var ttMessage = require('./model/TTMessage');
 
-
     var user = this.props.route.user;
     var currentUser = this.props.route.currentUser;
-
-    // var channelId = ttMessage.generateChannelName(currentUser,user);
-    // alert(channelId);
 
     ttMessage.addMessage(user, currentUser, message,rowID)
     .then(() => {
@@ -83,7 +96,7 @@ module.exports = React.createClass({
 
           <GiftedMessenger
             ref={(c) => this._GiftedMessenger = c}
-            messages={this.getMessages()}
+            messages={this.state.messages}
             handleSend={this.handleSend}
             maxHeight={Dimensions.get('window').height - 64} // 64 for the navBar
             displayNames={false}
