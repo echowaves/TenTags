@@ -5,7 +5,7 @@ var Parse = require('parse/react-native');
 var Message = Parse.Object.extend("Message");
 
 module.exports = {
-  addMessage: function(user, currentUser, msg, rowID) {
+  addMessage: function(user, currentUser, msg) {
     var message = new Message();
     message.addUnique("participants", user.id);
     message.addUnique("participants", currentUser.id);
@@ -13,7 +13,7 @@ module.exports = {
     message.set('sender', currentUser.id);
     // message.set('channel', this.generateChannelName(user, currentUser));
     message.set('message', msg['text']);
-    message.set('rodID', rowID);
+    // message.set('rodID', rowID);
 
     var promise = new Parse.Promise();
 
@@ -44,9 +44,10 @@ module.exports = {
   },
 
   generateChannelName: function(user, currentUser) {
-    if(user.id > currentUser.id) {
+    if(user.id.toString() > currentUser.id.toString()) {
       return "channel-" + currentUser.id + "-" + user.id;
+    } else {
+      return "channel-" + user.id + "-" + currentUser.id;
     }
-    return "channel-" + user.id + "-" + currentUser.id;
   }
 };

@@ -70,7 +70,7 @@ module.exports = React.createClass({
     var user = this.props.route.user;
     var currentUser = this.props.route.currentUser;
 
-    ttMessage.addMessage(user, currentUser, message,rowID)
+    ttMessage.addMessage(user, currentUser, message)
     .then(() => {
     },
     (error) => {
@@ -78,7 +78,7 @@ module.exports = React.createClass({
     });
 
   },
-  handleReceive(message = {}) {
+  handleReceive(message) {
     this._GiftedMessenger.appendMessage(message);
   },
   render: function() {
