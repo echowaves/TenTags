@@ -11,9 +11,7 @@ module.exports = {
     message.addUnique("participants", currentUser.id);
 
     message.set('sender', currentUser.id);
-    // message.set('channel', this.generateChannelName(user, currentUser));
     message.set('message', msg['text']);
-    // message.set('rodID', rowID);
 
     var promise = new Parse.Promise();
 

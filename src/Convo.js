@@ -27,9 +27,11 @@ module.exports = React.createClass({
     var that = this;
     var channel = pusher.subscribe( ttMessage.generateChannelName(user, currentUser));
     channel.bind('message', function(data) {
+      // alert("sender=" + data['sender']);
       that.handleReceive({
         text: data['message'],
-        name: data['name'],
+        sender: data['sender'],
+        name: null,
         // image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
         image: null,
         position: 'left', // left if received, right if sent
@@ -79,7 +81,10 @@ module.exports = React.createClass({
 
   },
   handleReceive(message) {
-    this._GiftedMessenger.appendMessage(message);
+    // alert(message['sender'] + "=" + this.props.route.currentUser.id);
+    if(message['sender'] != this.props.route.currentUser.id) {
+      this._GiftedMessenger.appendMessage(message);
+    }
   },
   render: function() {
     return (
@@ -116,8 +121,6 @@ module.exports = React.createClass({
               },
             }}
           />
-
-
         </View>
       </View>
     );
